@@ -1,0 +1,327 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Choice - Matrix Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'orbitron': ['Orbitron', 'sans-serif'],
+                        'courier': ['Courier Prime', 'monospace']
+                    },
+                    colors: {
+                        'matrix-green': '#00FF41',
+                        'matrix-dark-green': '#003300',
+                        'pill-red': '#FF0000',
+                        'pill-blue': '#0066FF'
+                    },
+                    animation: {
+                        'digital-rain': 'digitalRain 3s linear infinite',
+                        'fade-in': 'fadeIn 2s ease-in-out',
+                        'pulse-glow': 'pulseGlow 2s ease-in-out infinite',
+                        'pill-hover': 'pillHover 0.3s ease-in-out'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        @keyframes digitalRain {
+            0% { transform: translateY(-100vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+        
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 65, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(0, 255, 65, 0.8); }
+        }
+        
+        @keyframes pillHover {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        .digital-rain {
+            position: absolute;
+            top: -100vh;
+            left: 0;
+            width: 100%;
+            height: 200vh;
+            background: linear-gradient(transparent, #00FF41, transparent);
+            opacity: 0.1;
+            animation: digitalRain 3s linear infinite;
+        }
+        
+        .rain-column {
+            position: absolute;
+            width: 2px;
+            height: 100vh;
+            background: linear-gradient(to bottom, transparent, #00FF41, transparent);
+            animation: digitalRain 3s linear infinite;
+        }
+        
+        .morpheus-silhouette {
+            background: linear-gradient(45deg, #000, #333);
+            clip-path: polygon(30% 0%, 70% 0%, 85% 30%, 85% 70%, 70% 100%, 30% 100%, 15% 70%, 15% 30%);
+        }
+        
+        .pill-glow-red:hover {
+            box-shadow: 0 0 30px #FF0000, 0 0 50px #FF0000;
+            transform: scale(1.1);
+        }
+        
+        .pill-glow-blue:hover {
+            box-shadow: 0 0 30px #0066FF, 0 0 50px #0066FF;
+            transform: scale(1.1);
+        }
+        
+        .text-shadow-green {
+            text-shadow: 0 0 10px #00FF41, 0 0 20px #00FF41;
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-orbitron overflow-hidden">
+    <!-- Digital Rain Background Effect -->
+    <div class="fixed inset-0 z-0">
+        <div class="rain-column" style="left: 5%; animation-delay: 0s;"></div>
+        <div class="rain-column" style="left: 15%; animation-delay: 0.5s;"></div>
+        <div class="rain-column" style="left: 25%; animation-delay: 1s;"></div>
+        <div class="rain-column" style="left: 35%; animation-delay: 1.5s;"></div>
+        <div class="rain-column" style="left: 45%; animation-delay: 2s;"></div>
+        <div class="rain-column" style="left: 55%; animation-delay: 0.3s;"></div>
+        <div class="rain-column" style="left: 65%; animation-delay: 0.8s;"></div>
+        <div class="rain-column" style="left: 75%; animation-delay: 1.3s;"></div>
+        <div class="rain-column" style="left: 85%; animation-delay: 1.8s;"></div>
+        <div class="rain-column" style="left: 95%; animation-delay: 2.3s;"></div>
+    </div>
+
+    <!-- Main Content Container -->
+    <div class="relative z-10 min-h-screen flex flex-col justify-center items-center p-4">
+        
+        <!-- Audio Control Section -->
+        <div class="absolute top-4 right-4">
+            <!-- @COMPONENT: AudioPlayer [background music controls] -->
+            <div class="bg-black bg-opacity-80 border border-matrix-green rounded-lg p-3">
+                <div class="text-sm text-matrix-green mb-2">Background Audio</div>
+                <!-- YouTube audio would need to be implemented via iframe API or audio element -->
+                <!-- @IMPLEMENTATION: Integrate YouTube Audio API or use audio element with converted file -->
+                <audio id="backgroundAudio" data-mock="true" data-implementation="Replace with YouTube audio integration">
+                    <!-- Audio source would be implemented here -->
+                </audio>
+                <div class="flex space-x-2">
+                    <button id="playBtn" class="bg-matrix-green text-black px-3 py-1 rounded text-xs hover:bg-green-400 transition-colors">
+                        Play
+                    </button>
+                    <button id="pauseBtn" class="bg-gray-700 text-white px-3 py-1 rounded text-xs hover:bg-gray-600 transition-colors">
+                        Pause
+                    </button>
+                </div>
+            </div>
+            <!-- @END_COMPONENT: AudioPlayer -->
+        </div>
+
+        <!-- Main Character Section -->
+        <div class="text-center mb-8 animate-fade-in">
+            <!-- @COMPONENT: MorpheusCharacter [central figure display] -->
+            <div class="flex justify-center mb-6">
+                <!-- Morpheus character image placeholder -->
+                <!-- A silhouette of Morpheus from The Matrix holding two pills with dramatic lighting -->
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=800" 
+                         alt="Morpheus character from The Matrix" 
+                         class="w-64 h-80 object-cover rounded-lg shadow-2xl border-2 border-matrix-green"
+                         data-mock-image="true" 
+                         data-implementation="Replace with actual Morpheus character image" />
+                    
+                    <!-- Overlay effect for dramatic lighting -->
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent rounded-lg"></div>
+                    
+                    <!-- Pills in hands overlay -->
+                    <div class="absolute bottom-16 left-8 w-6 h-6 bg-pill-red rounded-full shadow-lg animate-pulse-glow"></div>
+                    <div class="absolute bottom-16 right-8 w-6 h-6 bg-pill-blue rounded-full shadow-lg animate-pulse-glow"></div>
+                </div>
+            </div>
+            <!-- @END_COMPONENT: MorpheusCharacter -->
+        </div>
+
+        <!-- Main Text Content -->
+        <div class="max-w-4xl mx-auto text-center mb-12 space-y-6 animate-fade-in">
+            <!-- @COMPONENT: WelcomeText [personalized greeting] -->
+            <h1 class="text-4xl md:text-6xl font-bold text-matrix-green text-shadow-green mb-6">
+                Hello <span class="text-white" data-bind="user.name">Rawan</span>
+            </h1>
+            
+            <div class="text-lg md:text-xl leading-relaxed space-y-4 font-courier">
+                <p class="text-gray-300">
+                    You are here to choose your destiny with your own hands...
+                </p>
+                
+                <div class="bg-black bg-opacity-60 border border-matrix-green rounded-lg p-6 my-8">
+                    <p class="text-white mb-4">
+                        If you choose the <span class="text-pill-blue font-bold">blue pill</span>, everything ends...
+                    </p>
+                    <p class="text-gray-300 mb-4">
+                        You will wake up in your bed and this will all be a dream...
+                    </p>
+                    <p class="text-white mb-4">
+                        But if you choose the <span class="text-pill-red font-bold">red pill</span>, you will remain in Wonderland...
+                    </p>
+                    <p class="text-matrix-green font-bold">
+                        And I will show you how deep the rabbit hole goes.
+                    </p>
+                </div>
+            </div>
+            <!-- @END_COMPONENT: WelcomeText -->
+        </div>
+
+        <!-- Pill Selection Interface -->
+        <div class="flex flex-col md:flex-row gap-8 items-center justify-center">
+            <!-- @COMPONENT: PillSelector [interactive choice interface] -->
+            
+            <!-- Blue Pill -->
+            <div class="flex flex-col items-center space-y-4">
+                <button 
+                    id="bluePill" 
+                    class="w-32 h-32 bg-pill-blue rounded-full border-4 border-white shadow-2xl transition-all duration-300 pill-glow-blue hover:animate-pill-hover"
+                    data-event="click:handleBluePillChoice"
+                    data-implementation="Should trigger blue pill storyline">
+                    <div class="w-full h-full rounded-full bg-gradient-to-br from-blue-400 to-blue-800 flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">BLUE</span>
+                    </div>
+                </button>
+                <div class="text-center">
+                    <h3 class="text-xl font-bold text-pill-blue mb-2">The Blue Pill</h3>
+                    <p class="text-sm text-gray-400 max-w-48">Return to the familiar world of illusion</p>
+                </div>
+            </div>
+
+            <!-- VS Divider -->
+            <div class="text-matrix-green text-4xl font-bold mx-8">VS</div>
+
+            <!-- Red Pill -->
+            <div class="flex flex-col items-center space-y-4">
+                <button 
+                    id="redPill" 
+                    class="w-32 h-32 bg-pill-red rounded-full border-4 border-white shadow-2xl transition-all duration-300 pill-glow-red hover:animate-pill-hover"
+                    data-event="click:handleRedPillChoice"
+                    data-implementation="Should trigger red pill storyline">
+                    <div class="w-full h-full rounded-full bg-gradient-to-br from-red-400 to-red-800 flex items-center justify-center">
+                        <span class="text-white font-bold text-lg">RED</span>
+                    </div>
+                </button>
+                <div class="text-center">
+                    <h3 class="text-xl font-bold text-pill-red mb-2">The Red Pill</h3>
+                    <p class="text-sm text-gray-400 max-w-48">Embrace the truth of reality</p>
+                </div>
+            </div>
+            
+            <!-- @END_COMPONENT: PillSelector -->
+        </div>
+
+        <!-- Choice Status Display -->
+        <div class="mt-12 text-center">
+            <!-- @COMPONENT: ChoiceStatus [displays user selection] -->
+            <div id="choiceStatus" class="hidden bg-black bg-opacity-80 border border-matrix-green rounded-lg p-6 max-w-lg mx-auto">
+                <h3 class="text-xl font-bold text-matrix-green mb-4">Your Choice</h3>
+                <p id="choiceMessage" class="text-white" data-bind="choice.message">Make your selection...</p>
+            </div>
+            <!-- @END_COMPONENT: ChoiceStatus -->
+        </div>
+    </div>
+
+    <!-- JavaScript for Interactions -->
+    <script>
+        (function() {
+            // Audio controls implementation
+            const playBtn = document.getElementById('playBtn');
+            const pauseBtn = document.getElementById('pauseBtn');
+            
+            // TODO: Implement YouTube Audio API integration
+            // This would require YouTube iframe API or converted audio file
+            
+            // Pill selection handlers
+            const bluePill = document.getElementById('bluePill');
+            const redPill = document.getElementById('redPill');
+            const choiceStatus = document.getElementById('choiceStatus');
+            const choiceMessage = document.getElementById('choiceMessage');
+
+            function handlePillChoice(choice, color) {
+                // Remove previous selections
+                bluePill.classList.remove('ring-4', 'ring-white');
+                redPill.classList.remove('ring-4', 'ring-white');
+                
+                // Highlight selected pill
+                const selectedPill = choice === 'blue' ? bluePill : redPill;
+                selectedPill.classList.add('ring-4', 'ring-white');
+                
+                // Show choice status
+                choiceStatus.classList.remove('hidden');
+                choiceStatus.classList.add('animate-fade-in');
+                
+                // Update message based on choice
+                if (choice === 'blue') {
+                    choiceMessage.textContent = "You chose the blue pill. The dream continues...";
+                    choiceMessage.className = "text-pill-blue";
+                    // TODO: Implement blue pill storyline
+                } else {
+                    choiceMessage.textContent = "You chose the red pill. Welcome to the real world...";
+                    choiceMessage.className = "text-pill-red";
+                    // TODO: Implement red pill storyline
+                }
+            }
+
+            // Event listeners
+            bluePill.addEventListener('click', () => handlePillChoice('blue', 'pill-blue'));
+            redPill.addEventListener('click', () => handlePillChoice('red', 'pill-red'));
+
+            // Audio control handlers
+            playBtn.addEventListener('click', () => {
+                // TODO: Implement play functionality
+                console.log('Play audio');
+            });
+
+            pauseBtn.addEventListener('click', () => {
+                // TODO: Implement pause functionality
+                console.log('Pause audio');
+            });
+
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft' || e.key === 'b' || e.key === 'B') {
+                    handlePillChoice('blue');
+                } else if (e.key === 'ArrowRight' || e.key === 'r' || e.key === 'R') {
+                    handlePillChoice('red');
+                }
+            });
+
+            // Initialize digital rain effect dynamically
+            function createRainDrop() {
+                const rainDrop = document.createElement('div');
+                rainDrop.className = 'rain-column';
+                rainDrop.style.left = Math.random() * 100 + '%';
+                rainDrop.style.animationDelay = Math.random() * 3 + 's';
+                rainDrop.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                document.querySelector('.fixed.inset-0').appendChild(rainDrop);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    rainDrop.remove();
+                }, 5000);
+            }
+
+            // Continuously create rain drops
+            setInterval(createRainDrop, 300);
+
+        })();
+    </script>
+</body>
+</html>

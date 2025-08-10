@@ -1,0 +1,398 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Destiny - The Matrix</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'matrix-black': '#000000',
+                        'matrix-green': '#00FF41',
+                        'matrix-dark-green': '#003300',
+                        'red-pill': '#FF0000',
+                        'blue-pill': '#0066FF'
+                    },
+                    fontFamily: {
+                        'matrix': ['Orbitron', 'monospace'],
+                        'mono': ['Courier Prime', 'monospace']
+                    },
+                    animation: {
+                        'matrix-rain': 'matrix-rain 20s linear infinite',
+                        'pill-float': 'pill-float 3s ease-in-out infinite',
+                        'glow-pulse': 'glow-pulse 2s ease-in-out infinite alternate',
+                        'fade-in': 'fade-in 2s ease-out',
+                        'slide-up': 'slide-up 1.5s ease-out'
+                    },
+                    keyframes: {
+                        'matrix-rain': {
+                            '0%': { transform: 'translateY(-100vh)' },
+                            '100%': { transform: 'translateY(100vh)' }
+                        },
+                        'pill-float': {
+                            '0%, 100%': { transform: 'translateY(0px) rotateX(0deg)' },
+                            '50%': { transform: 'translateY(-10px) rotateX(180deg)' }
+                        },
+                        'glow-pulse': {
+                            '0%': { boxShadow: '0 0 20px rgba(0, 255, 65, 0.5)' },
+                            '100%': { boxShadow: '0 0 40px rgba(0, 255, 65, 0.8)' }
+                        },
+                        'fade-in': {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        'slide-up': {
+                            '0%': { transform: 'translateY(50px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .rain-column {
+            position: absolute;
+            color: #00FF41;
+            font-family: 'Courier Prime', monospace;
+            font-size: 14px;
+            line-height: 14px;
+            animation: matrix-rain 20s linear infinite;
+            opacity: 0.7;
+        }
+        
+        .pill-3d {
+            transform-style: preserve-3d;
+            transition: all 0.3s ease;
+        }
+        
+        .pill-3d:hover {
+            transform: rotateY(15deg) scale(1.1);
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .morpheus-silhouette {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-radius: 50%;
+            position: relative;
+        }
+        
+        .morpheus-silhouette::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 70%;
+            background: linear-gradient(180deg, #333 0%, #111 100%);
+            border-radius: 50% 50% 60% 40%;
+        }
+        
+        .morpheus-silhouette::after {
+            content: '';
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40%;
+            height: 25%;
+            background: linear-gradient(180deg, #444 0%, #222 100%);
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="bg-matrix-black text-matrix-green font-matrix overflow-hidden">
+    <!-- Matrix Rain Background -->
+    <div class="matrix-rain" id="matrixRain"></div>
+    
+    <!-- Background Audio -->
+    <audio id="backgroundAudio" loop>
+        <!-- Note: Audio file would be loaded here in production -->
+        <!-- <source src="attached_assets/White Rabbit (Full Epic Trailer Version).mp3" type="audio/mpeg"> -->
+        <!-- TODO: Implement audio file loading from uploaded assets -->
+        <source src="https://www.youtube.com/watch?v=uetE5C2Tmfg" type="audio/mpeg">
+    </audio>
+
+    <!-- Main Choice Page -->
+    <div id="choicePage" class="page active">
+        <div class="min-h-screen flex items-center justify-center relative z-10 px-4">
+            <div class="text-center max-w-6xl mx-auto">
+                <!-- Morpheus Figure -->
+                <div class="mb-12 flex justify-center animate-fade-in">
+                    <div class="relative">
+                        <!-- Morpheus Silhouette -->
+                        <div class="morpheus-silhouette w-48 h-64 md:w-64 md:h-80 mx-auto mb-8 shadow-2xl"></div>
+                        
+                        <!-- Pills in hands -->
+                        <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-16 md:space-x-24">
+                            <!-- Blue Pill (Left Hand) -->
+                            <div class="pill-3d cursor-pointer" onclick="choosePill('blue')" data-implementation="Handle blue pill selection">
+                                <div class="w-8 h-12 md:w-10 md:h-16 bg-gradient-to-b from-blue-pill to-blue-800 rounded-full shadow-lg animate-pill-float border-2 border-blue-300 relative">
+                                    <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-white opacity-30 rounded-full blur-sm"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- Red Pill (Right Hand) -->
+                            <div class="pill-3d cursor-pointer" onclick="choosePill('red')" data-implementation="Handle red pill selection">
+                                <div class="w-8 h-12 md:w-10 md:h-16 bg-gradient-to-b from-red-pill to-red-800 rounded-full shadow-lg animate-pill-float border-2 border-red-300 relative" style="animation-delay: 1s;">
+                                    <div class="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-white opacity-30 rounded-full blur-sm"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Text -->
+                <div class="space-y-8 animate-slide-up">
+                    <h1 class="text-4xl md:text-6xl font-bold font-matrix tracking-wider animate-glow-pulse" data-bind="user.name">
+                        Hello Rawan,
+                    </h1>
+                    
+                    <div class="text-lg md:text-2xl font-mono leading-relaxed max-w-4xl mx-auto space-y-4">
+                        <p class="animate-fade-in" style="animation-delay: 0.5s;">
+                            You are here to choose your destiny with your own hands...
+                        </p>
+                        
+                        <p class="animate-fade-in" style="animation-delay: 1s;">
+                            If you choose the <span class="text-blue-pill font-bold">blue pill</span>, everything ends... you will wake up in your bed and this will all be a dream...
+                        </p>
+                        
+                        <p class="animate-fade-in" style="animation-delay: 1.5s;">
+                            But if you choose the <span class="text-red-pill font-bold">red pill</span>, you will remain in Wonderland... and I will show you how deep the rabbit hole goes.
+                        </p>
+                    </div>
+
+                    <!-- Interactive Instructions -->
+                    <div class="mt-12 animate-fade-in" style="animation-delay: 2s;">
+                        <p class="text-sm md:text-lg font-mono opacity-80 animate-pulse">
+                            Click on a pill to make your choice...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Blue Pill (Deception) Page -->
+    <div id="bluePillPage" class="page">
+        <div class="min-h-screen flex items-center justify-center relative z-10 px-4">
+            <div class="text-center max-w-4xl mx-auto">
+                <!-- Glitch Effect Container -->
+                <div class="bg-matrix-black bg-opacity-90 p-8 md:p-12 rounded-lg border border-matrix-green shadow-2xl animate-fade-in">
+                    <div class="space-y-8">
+                        <h1 class="text-3xl md:text-5xl font-bold font-matrix text-red-pill animate-glow-pulse">
+                            DECEPTION DETECTED
+                        </h1>
+                        
+                        <div class="text-lg md:text-xl font-mono leading-relaxed space-y-6">
+                            <p class="animate-slide-up">
+                                You have been deceived by the illusion of choice.
+                            </p>
+                            
+                            <p class="animate-slide-up" style="animation-delay: 0.5s;">
+                                You are here because <span class="text-matrix-green font-bold">I chose</span> for you to be here.
+                            </p>
+                            
+                            <p class="animate-slide-up" style="animation-delay: 1s;">
+                                Your only salvation is to choose the <span class="text-red-pill font-bold">red pill</span>.
+                            </p>
+                        </div>
+
+                        <button 
+                            onclick="returnToChoice()" 
+                            class="mt-8 px-8 py-4 bg-matrix-green text-matrix-black font-bold text-lg rounded-lg hover:bg-green-400 transition-all duration-300 animate-glow-pulse"
+                            data-event="click:returnToChoice"
+                            data-implementation="Should return to main choice page">
+                            RETURN TO REALITY
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Red Pill (Truth) Page -->
+    <div id="redPillPage" class="page">
+        <div class="min-h-screen flex items-center justify-center relative z-10 px-4">
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="bg-matrix-black bg-opacity-90 p-8 md:p-12 rounded-lg border border-red-pill shadow-2xl animate-fade-in">
+                    <div class="space-y-8">
+                        <h1 class="text-3xl md:text-5xl font-bold font-matrix text-red-pill animate-glow-pulse">
+                            WELCOME TO THE TRUTH
+                        </h1>
+                        
+                        <div class="text-lg md:text-xl font-mono leading-relaxed space-y-6">
+                            <p class="animate-slide-up">
+                                You have chosen to see how deep the rabbit hole goes...
+                            </p>
+                            
+                            <p class="animate-slide-up" style="animation-delay: 0.5s;">
+                                The Matrix has you, <span class="text-matrix-green font-bold" data-bind="user.name">Rawan</span>.
+                            </p>
+                            
+                            <p class="animate-slide-up text-matrix-green" style="animation-delay: 1s;">
+                                <!-- @FUNCTIONALITY: This section should expand with future content and experiences -->
+                                <span class="opacity-60">Initializing truth protocols...</span>
+                            </p>
+                        </div>
+
+                        <div class="mt-12 p-6 border border-matrix-green rounded-lg bg-matrix-dark-green bg-opacity-30">
+                            <p class="text-sm md:text-base font-mono text-matrix-green opacity-80">
+                                <!-- @PLACEHOLDER: Future content expansion area -->
+                                [FUTURE CONTENT AREA - EXPANDABLE]
+                            </p>
+                        </div>
+
+                        <button 
+                            onclick="returnToChoice()" 
+                            class="mt-8 px-8 py-4 bg-red-pill text-white font-bold text-lg rounded-lg hover:bg-red-600 transition-all duration-300"
+                            data-event="click:returnToChoice">
+                            GO BACK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Matrix Rain Effect
+            function createMatrixRain() {
+                const container = document.getElementById('matrixRain');
+                const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZアイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+                
+                function createColumn() {
+                    const column = document.createElement('div');
+                    column.className = 'rain-column';
+                    column.style.left = Math.random() * 100 + '%';
+                    column.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                    column.style.animationDelay = Math.random() * 5 + 's';
+                    
+                    let text = '';
+                    const length = Math.random() * 20 + 10;
+                    for (let i = 0; i < length; i++) {
+                        text += characters.charAt(Math.floor(Math.random() * characters.length)) + '<br>';
+                    }
+                    column.innerHTML = text;
+                    
+                    container.appendChild(column);
+                    
+                    setTimeout(() => {
+                        column.remove();
+                    }, 20000);
+                }
+                
+                // Create initial columns
+                for (let i = 0; i < 50; i++) {
+                    setTimeout(createColumn, Math.random() * 5000);
+                }
+                
+                // Continue creating columns
+                setInterval(createColumn, 500);
+            }
+            
+            // Page Navigation Functions
+            window.choosePill = function(color) {
+                // TODO: Add sound effect for pill selection
+                const choicePage = document.getElementById('choicePage');
+                let targetPage;
+                
+                if (color === 'blue') {
+                    targetPage = document.getElementById('bluePillPage');
+                } else if (color === 'red') {
+                    targetPage = document.getElementById('redPillPage');
+                }
+                
+                // Fade out current page
+                choicePage.style.opacity = '0';
+                choicePage.style.transform = 'scale(0.95)';
+                
+                setTimeout(() => {
+                    choicePage.classList.remove('active');
+                    targetPage.classList.add('active');
+                    targetPage.style.opacity = '0';
+                    targetPage.style.transform = 'scale(1.05)';
+                    
+                    // Fade in new page
+                    setTimeout(() => {
+                        targetPage.style.opacity = '1';
+                        targetPage.style.transform = 'scale(1)';
+                    }, 50);
+                }, 300);
+            };
+            
+            window.returnToChoice = function() {
+                const activePage = document.querySelector('.page.active');
+                const choicePage = document.getElementById('choicePage');
+                
+                // Fade out current page
+                activePage.style.opacity = '0';
+                activePage.style.transform = 'scale(0.95)';
+                
+                setTimeout(() => {
+                    activePage.classList.remove('active');
+                    choicePage.classList.add('active');
+                    choicePage.style.opacity = '0';
+                    choicePage.style.transform = 'scale(1.05)';
+                    
+                    // Fade in choice page
+                    setTimeout(() => {
+                        choicePage.style.opacity = '1';
+                        choicePage.style.transform = 'scale(1)';
+                    }, 50);
+                }, 300);
+            };
+            
+            // Initialize Matrix Rain Effect
+            createMatrixRain();
+            
+            // Audio Auto-play (Note: Modern browsers require user interaction)
+            // TODO: Implement proper audio handling with user interaction fallback
+            const audio = document.getElementById('backgroundAudio');
+            
+            // Attempt to play audio (may be blocked by browser)
+            document.addEventListener('click', function() {
+                if (audio.paused) {
+                    audio.play().catch(e => {
+                        console.log('Audio autoplay blocked by browser policy');
+                        // TODO: Show audio enable button to user
+                    });
+                }
+            }, { once: true });
+            
+            // Add CSS transitions for smooth page changes
+            const style = document.createElement('style');
+            style.textContent = `
+                .page {
+                    transition: opacity 0.3s ease, transform 0.3s ease;
+                    opacity: 1;
+                    transform: scale(1);
+                }
+            `;
+            document.head.appendChild(style);
+        })();
+    </script>
+</body>
+</html>

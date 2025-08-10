@@ -1,0 +1,382 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Destiny - Matrix Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'matrix-green': '#00FF41',
+                        'matrix-dark': '#0a0a0a',
+                        'matrix-gray': '#1a1a1a'
+                    },
+                    fontFamily: {
+                        'matrix': ['Courier New', 'monospace']
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate'
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(0, 255, 65, 0.5); }
+            to { box-shadow: 0 0 30px rgba(0, 255, 65, 0.8), 0 0 40px rgba(0, 255, 65, 0.3); }
+        }
+        
+        @keyframes rain {
+            0% { transform: translateY(-100vh); opacity: 1; }
+            100% { transform: translateY(100vh); opacity: 0; }
+        }
+        
+        .digital-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .rain-char {
+            position: absolute;
+            color: #00FF41;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            animation: rain linear infinite;
+            opacity: 0.3;
+        }
+        
+        .pill-3d {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .pill-3d:hover {
+            transform: rotateY(15deg) rotateX(15deg) scale(1.1);
+        }
+        
+        .character-silhouette {
+            background: linear-gradient(135deg, #1a1a1a 0%, #000000 100%);
+            border: 2px solid #00FF41;
+        }
+        
+        .choice-button {
+            background: linear-gradient(45deg, rgba(0,255,65,0.1) 0%, rgba(0,255,65,0.05) 100%);
+            border: 1px solid #00FF41;
+            transition: all 0.3s ease;
+        }
+        
+        .choice-button:hover {
+            background: linear-gradient(45deg, rgba(0,255,65,0.2) 0%, rgba(0,255,65,0.1) 100%);
+            transform: translateY(-2px);
+        }
+        
+        .red-pill {
+            background: linear-gradient(145deg, #ff4444, #cc0000);
+            box-shadow: 0 8px 16px rgba(255, 0, 0, 0.3);
+        }
+        
+        .blue-pill {
+            background: linear-gradient(145deg, #4466ff, #0033cc);
+            box-shadow: 0 8px 16px rgba(0, 51, 255, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-black text-white font-matrix overflow-hidden">
+    <!-- Digital Rain Background -->
+    <div class="digital-rain" id="digitalRain"></div>
+    
+    <!-- @COMPONENT: MainChoice [initial landing page with character and pills] -->
+    <div id="mainChoice" class="relative z-10 min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-6xl mx-auto grid lg:grid-cols-2 gap-8 items-center">
+            <!-- Character Section -->
+            <div class="text-center lg:text-left">
+                <!-- @FUNCTIONALITY: Character silhouette placeholder - replace with appropriate non-copyrighted illustration -->
+                <div class="character-silhouette w-80 h-96 mx-auto lg:mx-0 rounded-lg mb-8 flex items-center justify-center">
+                    <div class="text-matrix-green text-6xl">👤</div>
+                    <!-- TODO: Replace with custom character illustration -->
+                </div>
+                
+                <!-- Audio Control -->
+                <div class="mb-6">
+                    <button id="audioToggle" class="choice-button px-6 py-3 rounded-lg text-matrix-green">
+                        🎵 Enable Audio Experience
+                    </button>
+                    <audio id="backgroundAudio" loop>
+                        <!-- TODO: Implement audio file from uploaded asset -->
+                        <source src="#" type="audio/mpeg">
+                        <!-- Placeholder for background music -->
+                    </audio>
+                </div>
+            </div>
+            
+            <!-- Choice Section -->
+            <div class="text-center space-y-8">
+                <div class="space-y-4">
+                    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-matrix-green animate-glow">
+                        Hello Rawan
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-300 leading-relaxed max-w-lg mx-auto">
+                        You are here to choose your destiny with your own hands...
+                    </p>
+                </div>
+                
+                <!-- Pills Container -->
+                <div class="flex flex-col md:flex-row gap-8 justify-center items-center mt-12">
+                    <!-- Blue Pill -->
+                    <div class="text-center space-y-4">
+                        <div class="pill-3d blue-pill w-24 h-12 rounded-full mx-auto animate-float cursor-pointer"
+                             onclick="choosePill('blue')" 
+                             data-event="click:choosePill" 
+                             data-implementation="Navigate to blue pill choice page">
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-blue-400 font-bold">BLUE PILL</p>
+                            <p class="text-sm text-gray-400 max-w-xs">
+                                Everything ends... you will wake up in your bed and this will all be a dream...
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Red Pill -->
+                    <div class="text-center space-y-4">
+                        <div class="pill-3d red-pill w-24 h-12 rounded-full mx-auto animate-float cursor-pointer"
+                             style="animation-delay: 1s;"
+                             onclick="choosePill('red')"
+                             data-event="click:choosePill"
+                             data-implementation="Navigate to red pill choice page">
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-red-400 font-bold">RED PILL</p>
+                            <p class="text-sm text-gray-400 max-w-xs">
+                                You will remain in Wonderland... and I will show you how deep the rabbit hole goes
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: MainChoice -->
+    
+    <!-- @COMPONENT: BluePillPage [deception revelation page] -->
+    <div id="bluePillPage" class="hidden relative z-10 min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-4xl mx-auto text-center space-y-8">
+            <div class="space-y-6">
+                <h1 class="text-4xl md:text-6xl font-bold text-blue-400 animate-pulse-slow">
+                    DECEPTION
+                </h1>
+                <div class="bg-matrix-gray p-8 rounded-xl border border-matrix-green space-y-4">
+                    <p class="text-xl md:text-2xl text-matrix-green font-bold">
+                        You have been deceived by the illusion of choice.
+                    </p>
+                    <p class="text-lg text-gray-300">
+                        You are here because I chose for you to be here.
+                    </p>
+                    <p class="text-lg text-gray-300">
+                        Your only salvation is to choose the red pill.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <button onclick="returnToChoice()" 
+                        class="choice-button px-8 py-4 rounded-lg text-matrix-green text-lg hover:scale-105 transition-transform"
+                        data-event="click:returnToChoice"
+                        data-implementation="Navigate back to main choice page">
+                    Return to Choice
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: BluePillPage -->
+    
+    <!-- @COMPONENT: RedPillPage [future expandable content page] -->
+    <div id="redPillPage" class="hidden relative z-10 min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-4xl mx-auto text-center space-y-8">
+            <div class="space-y-6">
+                <h1 class="text-4xl md:text-6xl font-bold text-red-400 animate-glow">
+                    WELCOME TO REALITY
+                </h1>
+                <div class="bg-matrix-gray p-8 rounded-xl border border-red-400 space-y-4">
+                    <p class="text-xl md:text-2xl text-red-400 font-bold">
+                        You chose wisely, Rawan.
+                    </p>
+                    <p class="text-lg text-gray-300">
+                        The rabbit hole goes deeper than you can imagine...
+                    </p>
+                    <div class="text-matrix-green text-sm font-mono mt-8 p-4 bg-black rounded">
+                        <p>// TODO: Implement expanded content</p>
+                        <p>// This page is ready for future development</p>
+                        <p>// Add interactive elements, deeper narrative, etc.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="space-y-4">
+                <button onclick="returnToChoice()" 
+                        class="choice-button px-8 py-4 rounded-lg text-matrix-green text-lg hover:scale-105 transition-transform"
+                        data-event="click:returnToChoice"
+                        data-implementation="Navigate back to main choice page">
+                    Begin Again
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- @END_COMPONENT: RedPillPage -->
+
+    <script>
+        // Digital Rain Effect
+        (function() {
+            const rainContainer = document.getElementById('digitalRain');
+            const characters = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            
+            function createRainDrop() {
+                const char = document.createElement('div');
+                char.className = 'rain-char';
+                char.textContent = characters[Math.floor(Math.random() * characters.length)];
+                char.style.left = Math.random() * 100 + '%';
+                char.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                char.style.opacity = Math.random() * 0.3 + 0.1;
+                rainContainer.appendChild(char);
+                
+                setTimeout(() => {
+                    if (char.parentNode) {
+                        char.parentNode.removeChild(char);
+                    }
+                }, 5000);
+            }
+            
+            // Create rain drops periodically
+            setInterval(createRainDrop, 100);
+        })();
+        
+        // Audio Management
+        (function() {
+            const audioToggle = document.getElementById('audioToggle');
+            const backgroundAudio = document.getElementById('backgroundAudio');
+            let audioEnabled = false;
+            
+            audioToggle.addEventListener('click', function() {
+                if (!audioEnabled) {
+                    // TODO: Implement actual audio playback from uploaded file
+                    audioEnabled = true;
+                    audioToggle.textContent = '🎵 Audio Enabled';
+                    audioToggle.classList.add('text-matrix-green');
+                    // backgroundAudio.play().catch(e => console.log('Audio playback failed:', e));
+                } else {
+                    audioEnabled = false;
+                    audioToggle.textContent = '🎵 Enable Audio Experience';
+                    audioToggle.classList.remove('text-matrix-green');
+                    // backgroundAudio.pause();
+                }
+            });
+        })();
+        
+        // Page Navigation
+        function choosePill(color) {
+            const mainChoice = document.getElementById('mainChoice');
+            const bluePillPage = document.getElementById('bluePillPage');
+            const redPillPage = document.getElementById('redPillPage');
+            
+            // Fade out main choice
+            mainChoice.style.opacity = '0';
+            mainChoice.style.transition = 'opacity 0.5s ease';
+            
+            setTimeout(() => {
+                mainChoice.classList.add('hidden');
+                
+                if (color === 'blue') {
+                    bluePillPage.classList.remove('hidden');
+                    bluePillPage.style.opacity = '0';
+                    setTimeout(() => {
+                        bluePillPage.style.opacity = '1';
+                        bluePillPage.style.transition = 'opacity 0.5s ease';
+                    }, 50);
+                } else if (color === 'red') {
+                    redPillPage.classList.remove('hidden');
+                    redPillPage.style.opacity = '0';
+                    setTimeout(() => {
+                        redPillPage.style.opacity = '1';
+                        redPillPage.style.transition = 'opacity 0.5s ease';
+                    }, 50);
+                }
+            }, 500);
+        }
+        
+        function returnToChoice() {
+            const mainChoice = document.getElementById('mainChoice');
+            const bluePillPage = document.getElementById('bluePillPage');
+            const redPillPage = document.getElementById('redPillPage');
+            
+            // Hide current page
+            [bluePillPage, redPillPage].forEach(page => {
+                if (!page.classList.contains('hidden')) {
+                    page.style.opacity = '0';
+                    page.style.transition = 'opacity 0.5s ease';
+                    setTimeout(() => {
+                        page.classList.add('hidden');
+                    }, 500);
+                }
+            });
+            
+            // Show main choice
+            setTimeout(() => {
+                mainChoice.classList.remove('hidden');
+                mainChoice.style.opacity = '0';
+                setTimeout(() => {
+                    mainChoice.style.opacity = '1';
+                    mainChoice.style.transition = 'opacity 0.5s ease';
+                }, 50);
+            }, 500);
+        }
+        
+        // Touch/Mobile Optimizations
+        (function() {
+            if ('ontouchstart' in window) {
+                const pills = document.querySelectorAll('.pill-3d');
+                pills.forEach(pill => {
+                    pill.addEventListener('touchstart', function() {
+                        this.style.transform = 'scale(1.1)';
+                    });
+                    pill.addEventListener('touchend', function() {
+                        this.style.transform = '';
+                    });
+                });
+            }
+        })();
+        
+        // Responsive Adjustments
+        (function() {
+            function adjustForScreenSize() {
+                const isMobile = window.innerWidth < 768;
+                const rainContainer = document.getElementById('digitalRain');
+                
+                if (isMobile) {
+                    // Reduce rain intensity on mobile for performance
+                    rainContainer.style.opacity = '0.3';
+                } else {
+                    rainContainer.style.opacity = '0.5';
+                }
+            }
+            
+            adjustForScreenSize();
+            window.addEventListener('resize', adjustForScreenSize);
+        })();
+    </script>
+</body>
+</html>
