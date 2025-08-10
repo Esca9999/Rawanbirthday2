@@ -1,0 +1,252 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Courier+Prime:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(120, 100%, 25.5%);
+  --card: hsl(0, 0%, 5.88%);
+  --card-foreground: hsl(120, 100%, 25.5%);
+  --popover: hsl(0, 0%, 0%);
+  --popover-foreground: hsl(120, 100%, 25.5%);
+  --primary: hsl(120, 100%, 25.5%);
+  --primary-foreground: hsl(0, 0%, 0%);
+  --secondary: hsl(0, 0%, 5.88%);
+  --secondary-foreground: hsl(120, 100%, 25.5%);
+  --muted: hsl(0, 0%, 5.88%);
+  --muted-foreground: hsl(120, 10%, 60%);
+  --accent: hsl(0, 100%, 50%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --border: hsl(120, 100%, 25.5%);
+  --input: hsl(0, 0%, 5.88%);
+  --ring: hsl(120, 100%, 25.5%);
+  --chart-1: hsl(120, 100%, 25.5%);
+  --chart-2: hsl(0, 100%, 50%);
+  --chart-3: hsl(240, 100%, 50%);
+  --chart-4: hsl(60, 100%, 50%);
+  --chart-5: hsl(300, 100%, 50%);
+  --matrix-black: hsl(0, 0%, 0%);
+  --matrix-green: hsl(120, 100%, 50%);
+  --matrix-dark-green: hsl(120, 100%, 10%);
+  --red-pill: hsl(0, 100%, 50%);
+  --blue-pill: hsl(240, 100%, 50%);
+  --font-matrix: 'Orbitron', monospace;
+  --font-mono: 'Courier Prime', monospace;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: hsl(0, 0%, 0%);
+  --foreground: hsl(120, 100%, 25.5%);
+  --card: hsl(0, 0%, 5.88%);
+  --card-foreground: hsl(120, 100%, 25.5%);
+  --popover: hsl(0, 0%, 0%);
+  --popover-foreground: hsl(120, 100%, 25.5%);
+  --primary: hsl(120, 100%, 25.5%);
+  --primary-foreground: hsl(0, 0%, 0%);
+  --secondary: hsl(0, 0%, 5.88%);
+  --secondary-foreground: hsl(120, 100%, 25.5%);
+  --muted: hsl(0, 0%, 5.88%);
+  --muted-foreground: hsl(120, 10%, 60%);
+  --accent: hsl(0, 100%, 50%);
+  --accent-foreground: hsl(0, 0%, 100%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --border: hsl(120, 100%, 25.5%);
+  --input: hsl(0, 0%, 5.88%);
+  --ring: hsl(120, 100%, 25.5%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    background: var(--matrix-black);
+    color: var(--matrix-green);
+    font-family: var(--font-matrix);
+    overflow-x: hidden;
+  }
+}
+
+@layer components {
+  .matrix-rain-column {
+    position: absolute;
+    color: var(--matrix-green);
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 14px;
+    opacity: 0.7;
+    user-select: none;
+    pointer-events: none;
+  }
+  
+  .pill-3d {
+    transform-style: preserve-3d;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .pill-3d:hover {
+    transform: rotateY(15deg) scale(1.1);
+  }
+  
+  .morpheus-silhouette {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+    border-radius: 50%;
+    position: relative;
+  }
+  
+  .morpheus-silhouette::before {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 70%;
+    background: linear-gradient(180deg, #333 0%, #111 100%);
+    border-radius: 50% 50% 60% 40%;
+  }
+  
+  .morpheus-silhouette::after {
+    content: '';
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+    height: 25%;
+    background: linear-gradient(180deg, #444 0%, #222 100%);
+    border-radius: 50%;
+  }
+  
+  .page-transition {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .fade-enter {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  
+  .fade-enter-active {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  .fade-exit {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  .fade-exit-active {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@layer utilities {
+  .animate-matrix-rain {
+    animation: matrix-rain 20s linear infinite;
+  }
+  
+  .animate-pill-float {
+    animation: pill-float 3s ease-in-out infinite;
+  }
+  
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite alternate;
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 2s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 1.5s ease-out;
+  }
+  
+  .text-matrix-green {
+    color: var(--matrix-green);
+  }
+  
+  .text-matrix-black {
+    color: var(--matrix-black);
+  }
+  
+  .text-red-pill {
+    color: var(--red-pill);
+  }
+  
+  .text-blue-pill {
+    color: var(--blue-pill);
+  }
+  
+  .bg-matrix-black {
+    background-color: var(--matrix-black);
+  }
+  
+  .bg-matrix-green {
+    background-color: var(--matrix-green);
+  }
+  
+  .bg-matrix-dark-green {
+    background-color: var(--matrix-dark-green);
+  }
+  
+  .bg-red-pill {
+    background-color: var(--red-pill);
+  }
+  
+  .bg-blue-pill {
+    background-color: var(--blue-pill);
+  }
+  
+  .border-matrix-green {
+    border-color: var(--matrix-green);
+  }
+  
+  .border-red-pill {
+    border-color: var(--red-pill);
+  }
+  
+  .border-blue-pill {
+    border-color: var(--blue-pill);
+  }
+  
+  .font-matrix {
+    font-family: var(--font-matrix);
+  }
+}
+
+@keyframes matrix-rain {
+  0% { transform: translateY(-100vh); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes pill-float {
+  0%, 100% { transform: translateY(0px) rotateX(0deg); }
+  50% { transform: translateY(-10px) rotateX(180deg); }
+}
+
+@keyframes glow-pulse {
+  0% { box-shadow: 0 0 20px rgba(0, 255, 65, 0.5); }
+  100% { box-shadow: 0 0 40px rgba(0, 255, 65, 0.8); }
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(50px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
