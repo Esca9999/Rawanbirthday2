@@ -31,17 +31,17 @@ export default function MorpheusFigure({ onPillChoice }: MorpheusFigureProps) {
       
       {/* Pills in hands */}
       <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-16 md:space-x-24">
-        {/* Blue Pill (Left Hand) */}
-        <Pill 
-          type="blue" 
-          onClick={() => handlePillChoice("blue")}
-          className="animate-pill-float"
-        />
-        
-        {/* Red Pill (Right Hand) */}
+        {/* Red Pill (Left Hand) */}
         <Pill 
           type="red" 
           onClick={() => handlePillChoice("red")}
+          className="animate-pill-float"
+        />
+        
+        {/* Blue Pill (Right Hand) */}
+        <Pill 
+          type="blue" 
+          onClick={() => handlePillChoice("blue")}
           className="animate-pill-float"
           style={{ animationDelay: '1s' }}
         />
